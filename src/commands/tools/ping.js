@@ -9,8 +9,8 @@ module.exports = {
             fetchReply: true
         });
 
-        const newMessage = `API Latency ${client.ws.ping}\nClient Ping: ${message.createdTimestamp - interacion.createdTimestamp}`
-        await interacion.editReply ({
+        const newMessage = `API Latency ${client.ws.ping}\nClient Ping: ${message.createdTimestamp - interaction.createdTimestamp}`
+        await interaction.editReply ({
             content: newMessage
         });
     }
