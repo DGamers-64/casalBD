@@ -11,17 +11,24 @@ module.exports = {
             .setDescription('id del objeto')
             .setRequired(true)),
     async execute(interaction, client) {
-        let itemProfile = await Items;
+        let itemProfile = await Items.findOne({itemId: interaction.options.getString('id')});
         if (!itemProfile) {
             await interaction.reply({
                 content: `ID no encontrada`
             });
 
         } else {
+            if (!itemProfile.image3) {
             await interaction.reply({
-                content: `Server ID: ${itemProfile.itemId}`
+                content: `Id: ${itemProfile.itemId}\n${itemProfile.image1}\n${itemProfile.image2}`
             });
-            console.log(itemProfile);
+            console.log("Buscada la ID:", itemProfile.itemId);
+            } else {
+                await interaction.reply({
+                    content: `${itemProfile.itemId}\n${itemProfile.image1}\n${itemProfile.image2}\n${itemProfile.image3}`
+                });
+                console.log(itemProfile);
+            }
         }
     },
 };
