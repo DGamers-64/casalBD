@@ -1,6 +1,7 @@
 const Items = require('../../schemas/items')
 const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require("mongoose");
+const chalk = require("chalk");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -16,18 +17,18 @@ module.exports = {
             await interaction.reply({
                 content: `ID no encontrada`
             });
-
+            console.log(chalk.cyan("Buscada la ID:", interaction.options.getString('id')));
         } else {
             if (!itemProfile.image3) {
             await interaction.reply({
-                content: `Id: ${itemProfile.itemId}\n${itemProfile.image1}\n${itemProfile.image2}`
+                content: `Id: ${itemProfile.itemId}\nImagen 1: ${itemProfile.image1}\nImagen 2: ${itemProfile.image2}`
             });
-            console.log("Buscada la ID:", itemProfile.itemId);
+            console.log(chalk.cyan("Buscada la ID:", interaction.options.getString('id')));
             } else {
                 await interaction.reply({
-                    content: `${itemProfile.itemId}\n${itemProfile.image1}\n${itemProfile.image2}\n${itemProfile.image3}`
+                    content: `Id: ${itemProfile.itemId}\nImagen 1: ${itemProfile.image1}\nImagen 2:${itemProfile.image2}\nImagen 3: ${itemProfile.image3}`
                 });
-                console.log(itemProfile);
+                console.log(chalk.cyan("Buscada la ID:", interaction.options.getString('id')));
             }
         }
     },

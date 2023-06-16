@@ -1,6 +1,8 @@
 const Items = require('../../schemas/items')
 const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
+const chalk = require("chalk");
+
 let itemId = 0;
 
 module.exports = {
@@ -30,7 +32,7 @@ module.exports = {
         itemId=itemId+1
 
         await ItemsProfile.save().catch(console.error);
-        console.log("Nuevo registro!");
+        console.log(chalk.green("Nuevo registro!"));
 
         if (!interaction.options.getString('image3')) {
             await interaction.reply({
