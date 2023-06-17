@@ -1,5 +1,5 @@
 const Items = require('../../schemas/items')
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const mongoose = require('mongoose');
 const { MongoClient, ObjectId } = require('mongodb');
 const chalk = require("chalk");
@@ -8,6 +8,9 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('delete')
         .setDescription('Borra una entrada')
+        .setDefaultMemberPermissions(
+            PermissionFlagsBits.Administrator
+        )
         .addStringOption(option =>
             option.setName('nombre')
             .setDescription('nombre (id)')
