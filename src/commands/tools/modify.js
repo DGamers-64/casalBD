@@ -24,7 +24,10 @@ module.exports = {
             .setRequired(true))
         .addStringOption(option =>
             option.setName('image3')
-            .setDescription('tercera imagen')),
+            .setDescription('tercera imagen'))
+        .addStringOption(option =>
+            option.setName('desc')
+            .setDescription('descripcion')),
     async execute(interaction, client) {
         let ItemsProfile = await Items.updateOne({
             itemId: interaction.options.getString('nombre')}, {
@@ -32,6 +35,7 @@ module.exports = {
                     image1: interaction.options.getString('image1'),
                     image2: interaction.options.getString('image2'),
                     image3: interaction.options.getString('image3'),
+                    desc:   interaction.options.getString('desc'),
             }}).collation({ locale: 'en', strength:2 });
 
         let findItems = await Items.findOne({itemId: interaction.options.getString('nombre')}).collation({ locale: 'en', strength:2 });
@@ -41,16 +45,30 @@ module.exports = {
         if (!interaction.options.getString('image3')) {
             const embed1 = { title: `${findItems.itemId}`, image: { url: findItems.image1 }, color: 0x00ff00 };
             const embed2 = { image: { url: findItems.image2 }, color: 0x00ff00 };
-            await interaction.reply({
-                embeds: [embed1, embed2]
-            });
+            if (ItemsProfile.desc) {
+                await interaction.reply({
+                    content: ItemsProfile.desc,
+                    embeds: [embed1, embed2]
+                });
+            } else {
+                await interaction.reply({
+                    embeds: [embed1, embed2]
+                });
+            }
         } else {
             const embed1 = { image: { title: `${findItems.itemId}`, url: findItems.image1 }, color: 0x00ff00 };
             const embed2 = { image: { url: findItems.image2 }, color: 0x00ff00 };
             const embed3 = { image: { url: findItems.image3 }, color: 0x00ff00 };
-            await interaction.reply({
-                embeds: [embed1, embed2, embed3]
-            });                
+            if (ItemsProfile.desc) {
+                await interaction.reply({
+                    content: ItemsProfile.desc,
+                    embeds: [embed1, embed2, embed3]
+                });
+            } else {
+                await interaction.reply({
+                    embeds: [embed1, embed2, embed3]
+                });
+            }              
         } 
     },
 };

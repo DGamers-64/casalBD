@@ -4,7 +4,8 @@ const itemSchema = new Schema({
     itemId: String,
     image1: String,
     image2: String,
-    image3: String
+    image3: String,
+    desc: String
 });
 
 module.exports = new model("Items", itemSchema, "items");
