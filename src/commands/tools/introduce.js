@@ -3,12 +3,14 @@ const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 const chalk = require("chalk");
 
-let itemId = 0;
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('introduce')
         .setDescription('Introduce varias imagenes a la base de datos')
+        .addStringOption(option =>
+            option.setName('nombre')
+            .setDescription('nombre (id)')
+            .setRequired(true))
         .addStringOption(option =>
             option.setName('image1')
             .setDescription('primera imagen')
@@ -23,24 +25,22 @@ module.exports = {
     async execute(interaction, client) {
         let ItemsProfile = await Items;
         ItemsProfile = await new Items({
-            itemId: itemId,
+            itemId: interaction.options.getString('nombre'),
             image1: interaction.options.getString('image1'),
             image2: interaction.options.getString('image2'),
             image3: interaction.options.getString('image3'),
         });
-
-        itemId=itemId+1
 
         await ItemsProfile.save().catch(console.error);
         console.log(chalk.green("Nuevo registro!"));
 
         if (!interaction.options.getString('image3')) {
             await interaction.reply({
-                content: `Imagen 1: ${ItemsProfile.image1}\nImagen 2: ${ItemsProfile.image2}`
+                content: `Nombre: ${ItemsProfile.itemId}\nImagen 1: ${ItemsProfile.image1}\nImagen 2: ${ItemsProfile.image2}`
             });
         } else {
             await interaction.reply({
-                content: `Imagen 1: ${ItemsProfile.image1}\nImagen 2: ${ItemsProfile.image2}\nImagen 3: ${ItemsProfile.image3}`
+                content: `Nombre: ${ItemsProfile.itemId}\nImagen 1: ${ItemsProfile.image1}\nImagen 2: ${ItemsProfile.image2}\nImagen 3: ${ItemsProfile.image3}`
             });                
         } 
     },
