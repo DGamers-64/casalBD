@@ -35,12 +35,17 @@ module.exports = {
         console.log(chalk.green("Nuevo registro!"));
 
         if (!interaction.options.getString('image3')) {
+            const embed1 = { title: `${ItemsProfile.itemId}`, image: { url: ItemsProfile.image1 }, color: 0x00ff00 };
+            const embed2 = { image: { url: ItemsProfile.image2 }, color: 0x00ff00 };
             await interaction.reply({
-                content: `Nombre: ${ItemsProfile.itemId}\nImagen 1: ${ItemsProfile.image1}\nImagen 2: ${ItemsProfile.image2}`
+                embeds: [embed1, embed2]
             });
         } else {
+            const embed1 = { image: { title: `${ItemsProfile.itemId}`, url: ItemsProfile.image1 }, color: 0x00ff00 };
+            const embed2 = { image: { url: ItemsProfile.image2 }, color: 0x00ff00 };
+            const embed3 = { image: { url: ItemsProfile.image3 }, color: 0x00ff00 };
             await interaction.reply({
-                content: `Nombre: ${ItemsProfile.itemId}\nImagen 1: ${ItemsProfile.image1}\nImagen 2: ${ItemsProfile.image2}\nImagen 3: ${ItemsProfile.image3}`
+                embeds: [embed1, embed2, embed3]
             });                
         } 
     },
