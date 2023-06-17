@@ -25,6 +25,7 @@ module.exports = {
     async execute(interaction, client) {
         let ItemsProfile = await Items;
         ItemsProfile = await new Items({
+            author: interaction.user.username,
             itemId: interaction.options.getString('nombre'),
             image1: interaction.options.getString('image1'),
             image2: interaction.options.getString('image2'),
